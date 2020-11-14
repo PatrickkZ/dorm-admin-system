@@ -22,9 +22,9 @@
         select id,username from user
     </select>
 
-    <insert id="save" parameterType="User">
-        insert into user(id,username,password,salt)
-        values (#{id},#{username},#{password},#{salt})
+    <insert id="save" parameterType="User" keyProperty="id" useGeneratedKeys="true">
+        insert into user(username,password,salt)
+        values (#{username},#{password},#{salt})
     </insert>
 
     <insert id="insertCurUserRole">

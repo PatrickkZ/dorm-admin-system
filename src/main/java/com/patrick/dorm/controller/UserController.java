@@ -24,30 +24,30 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/user")
+    @GetMapping("/user/background")
     public Result getAllUsers(){
         return ResultFactory.buildSuccessResult(userService.listAllUsers());
     }
 
-    @GetMapping("/role")
+    @GetMapping("/user/background/role")
     public Result getAllRole(){
         return ResultFactory.buildSuccessResult(userService.getAllRoleInDb());
     }
 
-    @PutMapping(value = "/user/role")
+    @PutMapping(value = "/user/background/role")
     public Result modifyRole(@RequestBody User user){
         userService.modifyUserRole(user);
         return ResultFactory.buildSuccessResult(null);
     }
 
     //管理员重置密码
-    @PutMapping(value = "/user/password")
+    @PutMapping(value = "/user/background/password")
     public Result resetPassword(@RequestBody User user){
         userService.resetPassword(user);
         return ResultFactory.buildSuccessResult(null);
     }
 
-    @PutMapping(value = "/user/modifyPassword")
+    @PutMapping(value = "/modifyPassword")
     public Result modifyPassword(@RequestBody Map<String,String> map){
         String username = map.get("username");
         String curUser = SecurityUtils.getSubject().getPrincipal().toString();

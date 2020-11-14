@@ -22,12 +22,12 @@ public class DormController {
         this.dormService = dormService;
     }
 
-    @GetMapping(value = "/dorm")
+    @GetMapping(value = "/dorm/info")
     public Result getAllDorms(){
         return ResultFactory.buildSuccessResult(dormService.listAllDorms());
     }
 
-    @PostMapping(value = "/assign")
+    @PostMapping(value = "/dorm/operation/assign")
     public Result assignDorm(@RequestBody Map<String,String> map){
         if(dormService.assignDorm(map.get("studentNum"),map.get("roomNum"))){
             return ResultFactory.buildSuccessResult(null);
@@ -36,7 +36,7 @@ public class DormController {
         }
     }
 
-    @PostMapping(value = "/checkout")
+    @PostMapping(value = "/dorm/operation/checkout")
     public Result checkDorm(@RequestBody Map<String,String> map){
         String studentNum = map.get("studentNum");
         if(dormService.checkoutDorm(studentNum)){
@@ -46,7 +46,7 @@ public class DormController {
         }
     }
 
-    @PostMapping(value = "/switch")
+    @PostMapping(value = "/dorm/operation/switch")
     public Result switchDorm(@RequestBody Map<String,String> map){
         String studentNum = map.get("studentNum");
         String toRoomNum = map.get("toRoomNum");
@@ -68,13 +68,13 @@ public class DormController {
         return ResultFactory.buildSuccessResult(dormService.getDormStatistic());
     }
 
-    @PutMapping(value = "/dorm/update")
+    @PutMapping(value = "/dorm/info/update")
     public Result updateDormInfo(@RequestBody Dorm dorm){
         dormService.updateDormInfo(dorm);
         return ResultFactory.buildSuccessResult(null);
     }
 
-    @PostMapping(value = "/dorm/add")
+    @PostMapping(value = "/dorm/info/add")
     public Result addDorm(@RequestBody Dorm dorm){
         dormService.addDorm(dorm);
         return ResultFactory.buildSuccessResult(null);

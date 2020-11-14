@@ -16,12 +16,6 @@ import java.util.Map;
 
 @SpringBootTest
 public class MapperTester {
-    @Autowired
-    DormMapper dormMapper;
-
-    @Autowired
-    StudentMapper studentMapper;
-
     @Test
     public void test(){
     }

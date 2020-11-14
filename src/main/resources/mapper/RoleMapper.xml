@@ -26,4 +26,9 @@
     <select id="listAll" resultType="Role">
         select * from role
     </select>
+
+    <insert id="insertDefaultRole" parameterType="Integer">
+        insert into user_role(uid,rid)
+        values(#{value},'3')
+    </insert>
 </mapper>

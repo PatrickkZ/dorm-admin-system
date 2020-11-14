@@ -21,12 +21,12 @@ public class StudentController {
     }
 
     @CrossOrigin
-    @GetMapping(value = "/student")
+    @GetMapping(value = "/user/student")
     public Result getAllStudent(){
         return ResultFactory.buildSuccessResult(studentService.listAllStudent());
     }
 
-    @PutMapping(value = "/student")
+    @PutMapping(value = "/user/student")
     public Result updateStudent(@RequestBody Student student){
         logger.info(student.getStudentNum());
         logger.info(student.getMajor());
@@ -34,7 +34,7 @@ public class StudentController {
         return ResultFactory.buildSuccessResult(null);
     }
 
-    @PutMapping(value = "/student/password")
+    @PutMapping(value = "/user/student/password")
     public Result updatePassword(@RequestBody Student student){
         logger.info(student.getStudentNum());
         logger.info(student.getPassword());
@@ -42,7 +42,7 @@ public class StudentController {
         return ResultFactory.buildSuccessResult(null);
     }
 
-    @PostMapping(value = "/student/add")
+    @PostMapping(value = "/user/student/add")
     public Result addStudent(@RequestBody Student student){
         studentService.insertStudent(student);
         return ResultFactory.buildSuccessResult(null);

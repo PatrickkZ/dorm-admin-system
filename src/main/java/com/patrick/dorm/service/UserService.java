@@ -57,6 +57,9 @@ public class UserService {
             user.setSalt(salt);
             user.setPassword(encodedPassword);
             userMapper.save(user);
+            int uuid = user.getId();
+            //默认给一个普通用户角色
+            roleMapper.insertDefaultRole(uuid);
             return true;
         }
     }
