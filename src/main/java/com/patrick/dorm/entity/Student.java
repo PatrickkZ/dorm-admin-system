@@ -7,6 +7,8 @@ public class Student {
     private String gender;
     private String grade;
     private String major;
+    private String password;
+    private String salt;
     private Dorm dorm;
 
     public int getId() {
@@ -63,5 +65,21 @@ public class Student {
 
     public void setDorm(Dorm dorm) {
         this.dorm = dorm;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
     }
 }

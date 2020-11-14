@@ -1,6 +1,7 @@
 package com.patrick.dorm.mapper;
 
 import com.patrick.dorm.entity.User;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -10,8 +11,8 @@ public interface UserMapper {
     User getByUsername(String username);
     User getUserWithRole(String username);
     List<User> getAllUserWithRole();
-    /**
-     *不存在则保存，存在则更新
-     */
     void save(User user);
+    void deleteCurUserRole(Integer userId);
+    void insertCurUserRole(@Param("userId")Integer userId,@Param("roleId")Integer roleId);
+    void updatePassword(User user);
 }

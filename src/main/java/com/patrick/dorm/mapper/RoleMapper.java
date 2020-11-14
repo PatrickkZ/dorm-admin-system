@@ -9,5 +9,6 @@ import java.util.List;
 public interface RoleMapper {
     Role getById(Integer id);
     Role getRoleWithPermission(Integer id);
+    List<Role> listAll();
     List<Role> getByUserId(Integer userId);
 }

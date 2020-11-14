@@ -10,5 +10,9 @@ import java.util.List;
 public interface StudentMapper {
     List<Student> listAll();
     Student getByStuNum(String studentNum);
+    void checkoutByStudentNum(String studentNum);
+    void updateStudentInfo(Student student);
+    void updatePassword(Student student);
+    void insertStudent(Student student);
     void updateDorm(@Param("studentNum")String studentNum,@Param("roomNum")String roomNum);
 }

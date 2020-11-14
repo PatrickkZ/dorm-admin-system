@@ -20,9 +20,32 @@
         select id,stu_num,name,gender,grade,major,dorm_id from student where stu_num=#{value}
     </select>
 
+    <update id="updateStudentInfo" parameterType="Student">
+        update student
+        set name=#{name},gender=#{gender},grade=#{grade},major=#{major}
+        where stu_num=#{studentNum}
+    </update>
+
+    <update id="updatePassword" parameterType="Student">
+        update student
+        set password=#{password},salt=#{salt}
+        where stu_num=#{studentNum}
+    </update>
+
     <update id="updateDorm">
         update student
         set dorm_id=(select dorm.id from dorm where room_num=#{roomNum})
         where stu_num=#{studentNum}
     </update>
+
+    <update id="checkoutByStudentNum" parameterType="String">
+        update student
+        set dorm_id=null
+        where stu_num=#{value}
+    </update>
+
+    <insert id="insertStudent" parameterType="Student">
+        insert into student(stu_num,name,gender,grade,major)
+        values (#{studentNum},#{name},#{gender},#{grade},#{major})
+    </insert>
 </mapper>

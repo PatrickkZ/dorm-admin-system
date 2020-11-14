@@ -1,5 +1,6 @@
 package com.patrick.dorm.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.patrick.dorm.entity.Menu;
 import com.patrick.dorm.entity.Permission;
 import com.patrick.dorm.entity.User;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 @RestController
@@ -67,5 +69,17 @@ public class LoginController {
         String username = SecurityUtils.getSubject().getPrincipal().toString();
         List<Menu> menus = userService.listAllMenus(username);
         return ResultFactory.buildSuccessResult(menus);
+    }
+
+    @PostMapping("/authentication")
+    public Result authentication(@RequestBody String s){
+        Map<String,String> map = (Map<String, String>) JSON.parse(s);
+        String frontUser = map.get("username");
+        String backUser = SecurityUtils.getSubject().getPrincipal().toString();
+        if(frontUser.equals(backUser)){
+            return ResultFactory.buildSuccessResult(null);
+        }else {
+            return ResultFactory.buildFailResult("请重新登录");
+        }
     }
 }

@@ -23,6 +23,13 @@
         select * from dorm
     </select>
 
+    <select id="getStatistics" resultType="com.patrick.dorm.vo.DormInfoVo">
+        select building_num as buildingNum,type,sum(capacity) as capacity,sum(remain) as remain
+        from dorm
+        group by building_num, type
+        order by buildingNum
+    </select>
+
     <update id="increaseRemain" parameterType="String">
         update dorm
         set remain=remain+1
@@ -34,4 +41,15 @@
         set remain=remain-1
         where room_num=#{value}
     </update>
+
+    <update id="updateDorm" parameterType="Dorm">
+        update dorm
+        set capacity=#{capacity},remain=#{remain},type=#{type},frozen=#{frozen}
+        where id=#{id}
+    </update>
+
+    <insert id="insertDorm" parameterType="Dorm">
+        insert into dorm(building_num,room_num,capacity,remain,type,frozen)
+        values (#{buildingNum},#{roomNum},#{capacity},#{remain},#{type},#{frozen})
+    </insert>
 </mapper>

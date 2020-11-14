@@ -22,4 +22,8 @@
         from role,user_role
         where user_role.uid=#{value} and role.id=user_role.rid
     </select>
+
+    <select id="listAll" resultType="Role">
+        select * from role
+    </select>
 </mapper>
