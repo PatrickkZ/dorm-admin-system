@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.util.HtmlUtils;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -85,7 +86,7 @@ public class UserService {
         });
     }
 
-    public void modifyPassword(User user){
+    public void resetPassword(User user){
         String salt = new SecureRandomNumberGenerator().nextBytes().toString();
         // 设置 hash 算法迭代次数
         int times = 2;
@@ -95,5 +96,24 @@ public class UserService {
         user.setSalt(salt);
         user.setPassword(encodedPassword);
         userMapper.updatePassword(user);
+    }
+
+    public boolean modifyPassword(Map<String,String> map){
+        String username = map.get("username");
+        String origin = map.get("originPassword");
+        String reset = map.get("resetPassword");
+        User user = userMapper.getByUsername(username);
+        String encodedPassword = new SimpleHash("md5", origin, user.getSalt(), 2).toString();
+        if(encodedPassword.equals(user.getPassword())){
+            String salt = new SecureRandomNumberGenerator().nextBytes().toString();
+            String encoded = new SimpleHash("md5", reset, salt, 2).toString();
+            user.setSalt(salt);
+            user.setPassword(encoded);
+            userMapper.updatePassword(user);
+            return true;
+        }else {
+            //原始密码不对
+            return false;
+        }
     }
 }

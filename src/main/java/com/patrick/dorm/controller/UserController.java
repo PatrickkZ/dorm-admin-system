@@ -5,10 +5,13 @@ import com.patrick.dorm.entity.User;
 import com.patrick.dorm.result.Result;
 import com.patrick.dorm.result.ResultFactory;
 import com.patrick.dorm.service.UserService;
+import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/api/admin")
@@ -37,9 +40,25 @@ public class UserController {
         return ResultFactory.buildSuccessResult(null);
     }
 
+    //管理员重置密码
     @PutMapping(value = "/user/password")
-    public Result updatePassword(@RequestBody User user){
-        userService.modifyPassword(user);
+    public Result resetPassword(@RequestBody User user){
+        userService.resetPassword(user);
         return ResultFactory.buildSuccessResult(null);
+    }
+
+    @PutMapping(value = "/user/modifyPassword")
+    public Result modifyPassword(@RequestBody Map<String,String> map){
+        String username = map.get("username");
+        String curUser = SecurityUtils.getSubject().getPrincipal().toString();
+        if(username.equals(curUser)){
+            if(userService.modifyPassword(map)){
+                return ResultFactory.buildSuccessResult(null);
+            }else {
+                return ResultFactory.buildFailResult("原始密码错误");
+            }
+        }else {
+            return ResultFactory.buildFailResult("当前用户信息不匹配");
+        }
     }
 }
